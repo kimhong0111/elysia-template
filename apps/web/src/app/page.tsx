@@ -1,13 +1,24 @@
-import { Doro } from '@ui/doro'
+
 import { api } from '@libs'
+import { LeaderboardHeader } from '@web/components/LeaderboardHeader'
+import { UseRoundTab } from '@web/components/useRoundTab'
 
 export default async function Landing() {
-    const { data } = await api.get()
+    
+  
+  
+  const { data } = await api.get()
+    
 
     return (
-        <main className="flex flex-col gap-4 justify-center items-center w-full min-h-dvh">
-            <Doro />
-            <h1 className="text-2xl">{data}</h1>
-        </main>
+            
+            
+           <div className="min-h-screen">
+      <LeaderboardHeader />
+      <main className="container mx-auto p-4 py-8">
+        <UseRoundTab />
+      </main>
+    </div>
+
     )
 }
