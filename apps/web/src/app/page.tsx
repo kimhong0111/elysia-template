@@ -1,8 +1,7 @@
 
 import { api } from '@libs'
 import { LeaderboardHeader } from '@web/components/LeaderboardHeader'
-import { UseRoundTab } from '@web/components/useRoundTab'
-
+import { RoundTabs } from '@web/components/RoundTabs'
 export default async function Landing() {
     
   
@@ -12,13 +11,9 @@ export default async function Landing() {
 
     return (
             
-            
-           <div className="min-h-screen">
-      <LeaderboardHeader />
-      <main className="container mx-auto p-4 py-8">
-        <UseRoundTab />
-      </main>
-    </div>
+            <>
+            </>
+          
 
     )
 }
