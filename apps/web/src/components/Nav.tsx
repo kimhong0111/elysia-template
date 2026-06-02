@@ -17,7 +17,7 @@ export default function Nav(){
   }
     return (
         <>
-           <div className="pb-10">
+           <div className="pb-8">
               <LeaderboardHeader />
            </div>
             <div>
