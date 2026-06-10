@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useState } from 'react'
 import { useWebSocket } from '@web/hooks/useWebSocket'
 import { LeaderboardTable } from '@web/components/LeaderboardTable'

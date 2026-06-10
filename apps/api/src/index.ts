@@ -104,7 +104,7 @@ export const app = new Elysia()
     // upsert into sqlite
     upsertLeaderboard(rows as any)
 
-    // broadcast updated leaderboards to WS clients
+    // broadcast updated leaderboards to WS client
     const rd1 = getLeaderboardByRound('rd1')
     const rd2 = getLeaderboardByRound('rd2')
     const rd3 = getLeaderboardByRound('rd3')
