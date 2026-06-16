@@ -7,7 +7,6 @@ import { openapi, fromTypes } from '@elysiajs/openapi'
 import { cors } from '@elysiajs/cors'
 
 import { otel } from '@api/modules'
-import { insertMessage, getMessages } from '@api/db'
 /*import { leaderboardRoute } from './routes/leaderboard.route'*/ // rest route import
 import { syncAll } from './db/sync'
 import { getLeaderboardByRound, getOverallLeaderboard } from './db/repositories/sqlite/leaderboard.repository'
@@ -23,10 +22,10 @@ setInterval(async()=>{
   console.log('[cron] syncing')
   await syncAll()
     
-  const rd1 = getLeaderboardByRound('rd1')
-  const rd2 = getLeaderboardByRound('rd2')
-  const rd3 = getLeaderboardByRound('rd3')
-  const total=getOverallLeaderboard()
+  const rd1 = await getLeaderboardByRound('rd1')
+  const rd2 = await getLeaderboardByRound('rd2')
+  const rd3 = await getLeaderboardByRound('rd3')
+  const total = await getOverallLeaderboard()
 
 
   for (const client of clients) {
@@ -67,15 +66,15 @@ export const app = new Elysia()
         }
       })
     },
-    open(ws) {
+    async open(ws) {
       clients.add(ws)
       getMessages(50).then((history) => {
         ws.send(JSON.stringify({ type: 'history', data: history }))
       })
-         const rd1 = getLeaderboardByRound('rd1')
-         const rd2 = getLeaderboardByRound('rd2')
-         const rd3 = getLeaderboardByRound('rd3')
-         const total=getOverallLeaderboard();
+         const rd1 = await getLeaderboardByRound('rd1')
+         const rd2 = await getLeaderboardByRound('rd2')
+         const rd3 = await getLeaderboardByRound('rd3')
+         const total = await getOverallLeaderboard();
 
        ws.send(JSON.stringify({ type: 'leaderboard_rd1', data: rd1 }))
        ws.send(JSON.stringify({ type: 'leaderboard_rd2', data: rd2 }))
@@ -102,13 +101,13 @@ export const app = new Elysia()
     if (!Array.isArray(rows)) return new Response('expected array of rows', { status: 400 })
 
     // upsert into sqlite
-    upsertLeaderboard(rows as any)
+    await upsertLeaderboard(rows as any)
 
     // broadcast updated leaderboards to WS client
-    const rd1 = getLeaderboardByRound('rd1')
-    const rd2 = getLeaderboardByRound('rd2')
-    const rd3 = getLeaderboardByRound('rd3')
-    const total = getOverallLeaderboard()
+    const rd1 = await getLeaderboardByRound('rd1')
+    const rd2 = await getLeaderboardByRound('rd2')
+    const rd3 = await getLeaderboardByRound('rd3')
+    const total = await getOverallLeaderboard()
 
     for (const client of clients) {
       client.send(JSON.stringify({ type: 'leaderboard_rd1', data: rd1 }))
