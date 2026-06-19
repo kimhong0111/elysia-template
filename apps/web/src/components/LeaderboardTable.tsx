@@ -12,6 +12,17 @@ interface LeaderboardTableProps {
 const medals = ['🥇', '🥈', '🥉']
 
 export function LeaderboardTable({ data, rd }: LeaderboardTableProps) {
+  // Add safety check for data
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white rounded border border-slate-200 overflow-hidden p-8 text-center">
+          <p className="text-slate-500">Loading leaderboard data...</p>
+        </div>
+      </div>
+    )
+  } 
+
   const topScore = data.reduce((max, d) => Math.max(max, Number(d[rd])), 0)
 
   return(
