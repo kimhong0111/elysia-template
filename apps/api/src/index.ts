@@ -36,7 +36,7 @@ setInterval(async()=>{
 
   }
 
-},10_000)
+},3_000)
 
 
 
@@ -64,6 +64,7 @@ export const app = new Elysia()
          const rd2 = await getLeaderboardByRound('rd2')
          const rd3 = await getLeaderboardByRound('rd3')
          const total = await getOverallLeaderboard();
+
 
        ws.send(JSON.stringify({ type: 'leaderboard_rd1', data: rd1 }))
        ws.send(JSON.stringify({ type: 'leaderboard_rd2', data: rd2 }))
